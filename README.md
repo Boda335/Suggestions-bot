@@ -25,13 +25,14 @@ This Discord bot allows users to set up a suggestion system in their servers. It
    ```
 
 3. **Create a `.env` File**
+   
    Change the `example.env` file to `.env` in the root directory of your project and add the following environment variables:
    ```
    BOT_TOKEN=your-bot-token
    client_id=your-client-id
    ```
 
-4. **Set Up the Database**
+5. **Set Up the Database**
    The bot will automatically create an SQLite database named `suggestions.db` if it does not exist.
 
 ## Usage
