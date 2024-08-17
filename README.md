@@ -70,9 +70,6 @@ Sets up a channel for suggestions with specified emojis and role.
 
 To include images in the README, place them in the `images` folder and reference them like this:
 
-![Setup Command](images/setup-command.png)
-*Figure 1: Setup Suggestions Command*
-
 ![Suggestion Embed](images/suggestion-embed.png)
 <div style="text-align: center;">
    *Suggestion Embed Example*
