@@ -69,11 +69,9 @@ Sets up a channel for suggestions with specified emojis and role.
 ## Images
 
 To include images in the README, place them in the `images` folder and reference them like this:
+*Suggestion Embed Example*
 <div style="text-align: center;">
-   *Suggestion Embed Example*
   <img src="https://d.top4top.io/p_3136ssht11.png" alt="Easy" >
-  <img src="https://e.top4top.io/p_3136v3mvg2.png" alt="Medium" ">
-  <img src="https://f.top4top.io/p_3136obvf33.png" alt="Hard" >
 </div>
 
 ## License
