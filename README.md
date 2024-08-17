@@ -15,8 +15,8 @@ This Discord bot allows users to set up a suggestion system in their servers. It
 
 1. **Clone the Repository**
    ```bash
-   git clone https://github.com/yourusername/your-repo.git
-   cd your-repo
+   git clone https://github.com/Boda335/Suggestions-bot.git
+   cd Suggestions-bot 
    ```
 
 2. **Install Dependencies**
