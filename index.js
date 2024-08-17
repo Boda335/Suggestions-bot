@@ -122,23 +122,28 @@ client.on(Events.InteractionCreate, async interaction => {
 
             const existingChannel = data[interaction.guild.id].find(info => info.channelId === channel.id);
             if (existingChannel) {
-                await interaction.reply({ content: `Channel ${channel} is already saved.`, ephemeral: true });
-                return;
+                existingChannel.emoji1 = emoji1;
+                existingChannel.emoji2 = emoji2;
+                existingChannel.roleId = role.id;
+
+                fs.writeFileSync(dataFile, JSON.stringify(data, null, 2));
+
+                await interaction.reply({ content: `Channel ${channel} already saved. Updated emojis and role.`, ephemeral: true });
+            } else {
+                const channelInfo = {
+                    channelId: channel.id,
+                    channelName: channel.name,
+                    emoji1: emoji1,
+                    emoji2: emoji2,
+                    roleId: role.id
+                };
+
+                data[interaction.guild.id].push(channelInfo);
+
+                fs.writeFileSync(dataFile, JSON.stringify(data, null, 2));
+
+                await interaction.reply({ content: `Saved channel ${channel} in server ${interaction.guild.name} with emojis ${emoji1} and ${emoji2}, and role ${role}`, ephemeral: true});
             }
-
-            const channelInfo = {
-                channelId: channel.id,
-                channelName: channel.name,
-                emoji1: emoji1,
-                emoji2: emoji2,
-                roleId: role.id
-            };
-
-            data[interaction.guild.id].push(channelInfo);
-
-            fs.writeFileSync(dataFile, JSON.stringify(data, null, 2));
-
-            await interaction.reply({ content:`Saved channel ${channel} in server ${interaction.guild.name} with emojis ${emoji1} and ${emoji2}, and role ${role}`, ephemeral: true});
         }
     } else if (interaction.isButton()) {
         const { customId, member } = interaction;
