@@ -69,11 +69,22 @@ Sets up a channel for suggestions with specified emojis and role.
 ## Images
 *Setup Suggestion Channel Example*
 <div style="text-align: center;">
-  <img src="https://f.top4top.io/p_315092cxn1.png" alt="Embed" >
+  <img src="https://d.top4top.io/p_3150zadtp1.png" alt="Embed" >
 </div>
+
 *Suggestion Embed Example*
 <div style="text-align: center;">
   <img src="https://f.top4top.io/p_315092cxn1.png" alt="Embed" >
+</div>
+
+*Accepted Suggestion Embed Example*
+<div style="text-align: center;">
+  <img src="https://e.top4top.io/p_315069d462.png" alt="Embed" >
+</div>
+
+*Rejected Suggestion Embed Example*
+<div style="text-align: center;">
+  <img src="https://f.top4top.io/p_31501c4kz3.png" alt="Embed" >
 </div>
 
 ## License
