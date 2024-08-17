@@ -72,6 +72,18 @@ const rest = new REST({ version: '10' }).setToken(TOKEN);
 client.once('ready', async () => {
     try {
         console.log(`Logged in as ${client.user.tag}`);
+        console.log(`Created by boda3350`);
+        console.log(`Support Server`);
+        console.log(`https://discord.gg/evokers`);
+        console.log(`
+██████╗  ██████╗ ██████╗  █████╗ ██████╗ ██████╗ ███████╗ ██████╗ 
+██╔══██╗██╔═══██╗██╔══██╗██╔══██╗╚════██╗╚════██╗██╔════╝██╔═████╗
+██████╔╝██║   ██║██║  ██║███████║ █████╔╝ █████╔╝███████╗██║██╔██║
+██╔══██╗██║   ██║██║  ██║██╔══██║ ╚═══██╗ ╚═══██╗╚════██║████╔╝██║
+██████╔╝╚██████╔╝██████╔╝██║  ██║██████╔╝██████╔╝███████║╚██████╔╝
+╚═════╝  ╚═════╝ ╚═════╝ ╚═╝  ╚═╝╚═════╝ ╚═════╝ ╚══════╝ ╚═════╝ 
+                                                                  
+`);
 
         await rest.put(
             Routes.applicationCommands(client_id),
