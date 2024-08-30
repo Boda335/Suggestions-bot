@@ -1,6 +1,6 @@
 require('dotenv').config();
 
-const { Client, GatewayIntentBits, REST, Routes, SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ModalBuilder, TextInputBuilder, TextInputStyle, InteractionType, Events, PermissionsBitField } = require('discord.js');
+const { Client, GatewayIntentBits, REST,ActivityType, Routes, SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ModalBuilder, TextInputBuilder, TextInputStyle, InteractionType, Events, PermissionsBitField } = require('discord.js');
 const fs = require('fs');
 const path = require('path');
 const sqlite3 = require('sqlite3').verbose();
@@ -45,6 +45,7 @@ async function getChannelInfo(guildId, channelId) {
 }
 
 const commands = [
+    // الأمر الحالي
     new SlashCommandBuilder()
         .setName('setup-suggestions')
         .setDescription('Setup the suggestions channel')
@@ -63,6 +64,15 @@ const commands = [
         .addRoleOption(option =>
             option.setName('role')
                   .setDescription('Select a role that can use the buttons')
+                  .setRequired(true)),
+
+    // الأمر الجديد
+    new SlashCommandBuilder()
+        .setName('remove-suggestions')
+        .setDescription('Remove a suggestions channel and its data')
+        .addChannelOption(option => 
+            option.setName('channel')
+                  .setDescription('Select the channel to remove')
                   .setRequired(true))
 ]
     .map(command => command.toJSON());
@@ -70,12 +80,13 @@ const commands = [
 const rest = new REST({ version: '10' }).setToken(TOKEN);
 
 client.once('ready', async () => {
+    console.clear();
     try {
         console.log(`Logged in as ${client.user.tag}`);
         console.log(`Created by boda3350`);
         console.log(`Support Server`);
         console.log(`https://discord.gg/evokers`);
-        console.log(`
+         console.log(`
 ██████╗  ██████╗ ██████╗  █████╗ ██████╗ ██████╗ ███████╗ ██████╗ 
 ██╔══██╗██╔═══██╗██╔══██╗██╔══██╗╚════██╗╚════██╗██╔════╝██╔═████╗
 ██████╔╝██║   ██║██║  ██║███████║ █████╔╝ █████╔╝███████╗██║██╔██║
@@ -84,6 +95,17 @@ client.once('ready', async () => {
 ╚═════╝  ╚═════╝ ╚═════╝ ╚═╝  ╚═╝╚═════╝ ╚═════╝ ╚══════╝ ╚═════╝ 
                                                                   
 `);
+
+        client.user.setPresence({
+            status: 'idle', // تعيين حالة البوت كـ idle
+            activities: [
+                {
+                    name: "Your suggestion", // الاسم
+                    type: ActivityType.Watching, // النشاط هو مشاهدة
+                },
+            ],
+        });
+
 
         await rest.put(
             Routes.applicationCommands(client_id),
@@ -143,6 +165,26 @@ client.on(Events.InteractionCreate, async interaction => {
                 fs.writeFileSync(dataFile, JSON.stringify(data, null, 2));
 
                 await interaction.reply({ content: `Saved channel ${channel} in server ${interaction.guild.name} with emojis ${emoji1} and ${emoji2}, and role ${role}`, ephemeral: true});
+            }
+        } else if (commandName === 'remove-suggestions') {
+            const channel = options.getChannel('channel');
+            let data = {};
+            if (fs.existsSync(dataFile)) {
+                const fileContent = fs.readFileSync(dataFile);
+                data = JSON.parse(fileContent);
+            }
+
+            if (data[interaction.guild.id]) {
+                const index = data[interaction.guild.id].findIndex(info => info.channelId === channel.id);
+                if (index !== -1) {
+                    data[interaction.guild.id].splice(index, 1);
+                    fs.writeFileSync(dataFile, JSON.stringify(data, null, 2));
+                    await interaction.reply({ content: `Channel ${channel} has been removed from the data.`, ephemeral: true });
+                } else {
+                    await interaction.reply({ content: `No data found for channel ${channel}.`, ephemeral: true });
+                }
+            } else {
+                await interaction.reply({ content: `No data found for server ${interaction.guild.name}.`, ephemeral: true });
             }
         }
     } else if (interaction.isButton()) {
